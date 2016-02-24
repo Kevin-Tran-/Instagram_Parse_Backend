@@ -1,0 +1,6 @@
+framework module Pods_InstagramParse {
+  umbrella header "Pods-InstagramParse-umbrella.h"
+
+  export *
+  module * { export * }
+}
