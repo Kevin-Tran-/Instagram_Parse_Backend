@@ -26,7 +26,7 @@ class InstagramViewController: UIViewController {
     
     @IBAction func onLogout(sender: UIBarButtonItem) {
         PFUser.logOut()
-        var vc = storyboard!.instantiateInitialViewController()! as UIViewController
+        let vc = storyboard!.instantiateInitialViewController()! as UIViewController
         self.presentViewController(vc, animated: true, completion: nil)
         print("User logged out")
     }
