@@ -13,6 +13,8 @@ import Parse
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -22,12 +24,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // clientKey is not used on Parse open source unless explicitly configured
         Parse.initializeWithConfiguration(
             ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
-                configuration.applicationId = "myAppId"
+                configuration.applicationId = "Instagram"
+                configuration.clientKey = "fuieaju3298fiuakjnf2u"
                 configuration.server = "https://instagramgroundup.herokuapp.com/parse"
             })
         )
         
+        if PFUser.currentUser() != nil {
+            print("Current user detected: \(PFUser.currentUser())")
+            var vc = storyboard.instantiateViewControllerWithIdentifier("loginNavigationController") as UIViewController
+            window?.rootViewController = vc
+        }
+        
         return true
+    }
+    
+    func userDidLogout(){
+        var vc = storyboard.instantiateInitialViewController()! as UIViewController
+        window?.rootViewController = vc
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
