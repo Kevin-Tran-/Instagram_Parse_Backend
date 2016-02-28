@@ -10,7 +10,9 @@ import UIKit
 import Parse
 
 class InstagramViewController: UIViewController {
-
+    
+    var window: UIWindow?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,6 +26,9 @@ class InstagramViewController: UIViewController {
     
     @IBAction func onLogout(sender: UIBarButtonItem) {
         PFUser.logOut()
+        var vc = storyboard!.instantiateInitialViewController()! as UIViewController
+        self.presentViewController(vc, animated: true, completion: nil)
+        print("User logged out")
     }
 
     /*
