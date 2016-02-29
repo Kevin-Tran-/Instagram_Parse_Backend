@@ -19,6 +19,8 @@ class InstagramViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
+    var newImage: UIImage!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,17 +37,20 @@ class InstagramViewController: UIViewController, UIImagePickerControllerDelegate
         usernameLabel.textColor = UIColor(red: 18/255.0, green: 86/255.0, blue: 136/255.0, alpha: 1)
         print(user!)
         //print(user!["_User"])
-        if let userPicture = user!["profile_image"] as? PFFile {
-            userPicture.getDataInBackgroundWithBlock({
-                (imageData: NSData?, error: NSError?) -> Void in
-                if (error == nil) {
-                    let image = UIImage(data:imageData!)
-                    self.userImage.image = image!
-                    self.userImage.hidden = false
-                    
-                }
-            })
+        if newImage == nil {
+            if let userPicture = user!["profile_image"] as? PFFile {
+                userPicture.getDataInBackgroundWithBlock({
+                    (imageData: NSData?, error: NSError?) -> Void in
+                    if (error == nil) {
+                        let image = UIImage(data:imageData!)
+                        self.userImage.image = image!
+                        self.userImage.hidden = false
+                        
+                    }
+                })
+            }
         }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,6 +65,7 @@ class InstagramViewController: UIViewController, UIImagePickerControllerDelegate
             saveButton.hidden = false
             userImage.hidden = false
             cancelButton.hidden = false
+            newImage = resizeImage
             userImage.image = resizeImage
             self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -68,6 +74,7 @@ class InstagramViewController: UIViewController, UIImagePickerControllerDelegate
         let resizeImageView = UIImageView(frame: CGRectMake(0, 0, newSize.width, newSize.height))
         resizeImageView.contentMode = UIViewContentMode.ScaleAspectFill
         resizeImageView.image = image
+        
         
         UIGraphicsBeginImageContext(resizeImageView.frame.size)
         resizeImageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)

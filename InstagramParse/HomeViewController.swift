@@ -42,7 +42,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if PFUser.currentUser() != nil {
             print(PFUser.currentUser()!.objectId!)
             UserMedia.queryParse(20) { (instagram, error) -> () in
-                print(instagram)
+                //print(instagram)
                 self.instagram = instagram
                 self.tableView.reloadData()
                 MBProgressHUD.hideHUDForView(self.view, animated: true)
@@ -99,6 +99,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         profileView.layer.borderWidth = 1;
         
         let user = PFUser.currentUser()
+//        let user = instagram![section].valueForKey("author")
+//        print(user!)
+//        
+//        let user2 = PFUser.currentUser()!.valueForKey("objectId")
+//        print(user2!)
+        
+//        if user!["objectID"] == PFUser.currentUser()! {
+//            print("user equal current user")
+//            
+//        }
+        
+//        let userID = instagram![section].valueForKey("author")!.objectId!
+//        print(userID!)
+//        print(instagram![section].valueForKey("profile_mage")!)
+//        let user = instagram![section].valueForKey("user_image")
         if let userPicture = user!["profile_image"] as? PFFile {
             userPicture.getDataInBackgroundWithBlock({
                 (imageData: NSData?, error: NSError?) -> Void in
