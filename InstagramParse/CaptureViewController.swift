@@ -68,7 +68,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : AnyObject]) {
             let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-            let resizeImage = resize(originalImage, newSize: CGSize(width: 750, height: 750))
+            let resizeImage = resize(originalImage, newSize: CGSize(width: 1280, height: 800))
             previewImage.image = resizeImage
             captionField.hidden = false
             submitButton.hidden = false

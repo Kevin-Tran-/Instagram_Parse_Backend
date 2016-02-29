@@ -8,12 +8,12 @@
 
 import UIKit
 import Parse
+import MBProgressHUD
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
     var instagram: [PFObject]?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func viewDidAppear(animated: Bool) {
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+
         if PFUser.currentUser() != nil {
             print(PFUser.currentUser()!.objectId!)
             UserMedia.queryParse(20) { (instagram, error) -> () in
                 print(instagram)
                 self.instagram = instagram
                 self.tableView.reloadData()
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
             }
         }
     }
@@ -43,25 +46,131 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if instagram != nil {
-            print(instagram?.count)
-            return instagram!.count
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if let instagram = instagram {
+            return instagram.count
         } else {
             return 0
         }
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        print(instagram)
+        //print(instagram)
         let cell = tableView.dequeueReusableCellWithIdentifier("InstagramCell", forIndexPath: indexPath) as! InstagramCell
-        cell.instagram = self.instagram![indexPath.row]
-        print(indexPath.row)
+        cell.instagram = self.instagram![indexPath.section]
+        //print(indexPath.row)
         
         return cell
     }
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 10, width: 320, height: 60))
+        headerView.backgroundColor = UIColor(white: 1, alpha: 0.9)
+        
+        let profileView = UIImageView(frame: CGRect(x: 10, y: 0, width: 30, height: 30))
+        profileView.clipsToBounds = true
+        profileView.layer.cornerRadius = 15;
+        profileView.layer.borderColor = UIColor(white: 0.7, alpha: 0.8).CGColor
+        profileView.layer.borderWidth = 1;
+        
+        // Use the section number to get the right URL
+//        if let userImage = instagram![section].valueForKeyPath("user.profile_picture") as? String {
+//            let userImageURL = NSURL(string: userImage)
+//            profileView.setImageWithURL(userImageURL!)
+//        }
+        let user = PFUser.currentUser()
+        print(user!)
+        //print(user!["_User"])
+        if let userPicture = user!["profile_image"] as? PFFile {
+            userPicture.getDataInBackgroundWithBlock({
+                (imageData: NSData?, error: NSError?) -> Void in
+                if (error == nil) {
+                    let image = UIImage(data:imageData!)
+                    profileView.image = image!
+                    profileView.hidden = false
+                }
+            })
+        } else {
+            profileView.hidden = true
+        }
+        
+        headerView.addSubview(profileView)
+        print(section)
+        // Add a UILabel for the username here
+        let nameView = UILabel(frame: CGRect(x: 50, y: 0, width: 200, height: 30))
+        
+        nameView.font = UIFont.boldSystemFontOfSize(16)
+        nameView.textColor = UIColor(red: 18/255.0, green: 86/255.0, blue: 136/255.0, alpha: 1) //http://designpieces.com/palette/instagram-colour-palette-hex-and-rgb/
+        
+        if let name = instagram![section].valueForKeyPath("username_str") as? String {
+            //print(name)
+            nameView.text = name
+        }
+        headerView.addSubview(nameView)
+        
+//        let createdView = UILabel(frame: CGRect(x: nameView., y: 0, width: 100, height: 30))
+//        
+//        createdView.font = UIFont.boldSystemFontOfSize(16)
+//        createdView.textColor = UIColor(red: 18/255.0, green: 86/255.0, blue: 136/255.0, alpha: 1) //http://designpieces.com/palette/instagram-colour-palette-hex-and-rgb/
+//        createdView.textAlignment = NSTextAlignment.Right
+//        
+//        createdView.text = "4h"
+//        
+//        if let createdAt = instagram![section].valueForKeyPath("created_at") as? String {
+//            print(createdAt)
+//            createdView.text = createdAt
+//        }
+//        headerView.addSubview(createdView)
+
+        
+        return headerView
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func secondsToTime(createdAt: NSDate?) -> String {
+        let today = NSDate()
+        let secs = 60
+        let mins = 60
+        let hours = 24
+
+        var sec = Int(today.timeIntervalSinceDate(createdAt!))
+        if sec > 518400 { //greater than 6 days
+            let formatter = NSDateFormatter()
+            formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+            return formatter.stringFromDate(createdAt!)
+        }
+        
+        if sec > 86400 { // greater than 24 hours
+            sec /= (mins*secs*hours)
+            let s = "\(sec)d"
+            return s
+        }
+        
+        if sec > 3600 { // greater than 1h
+            sec /= (secs*mins)
+            let s = "\(sec)h"
+            return s
+        }
+        
+        sec = sec / secs
+        let s = "\(sec)m"
+        return s
+    }
 
     /*
     // MARK: - Navigation

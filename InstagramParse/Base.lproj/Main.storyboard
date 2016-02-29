@@ -245,21 +245,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlx-bA-83s">
-                                <rect key="frame" x="14" y="79" width="48" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlx-bA-83s">
+                                <rect key="frame" x="8" y="72" width="48" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Logout"/>
                                 <connections>
                                     <action selector="onLogout:" destination="BvW-FF-cZo" eventType="touchUpInside" id="JZT-OL-G9v"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VCw-UF-Jrw">
+                                <rect key="frame" x="174" y="72" width="138" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Upload User Picture"/>
+                                <connections>
+                                    <action selector="onUpload:" destination="BvW-FF-cZo" eventType="touchUpInside" id="RfT-Zw-prD"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s9d-UY-4kk">
+                                <rect key="frame" x="8" y="139" width="304" height="300"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="sub-sk-GQn"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMD-zt-roT">
+                                <rect key="frame" x="8" y="110" width="304" height="21.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Mc-zo-hfy">
+                                <rect key="frame" x="143" y="447" width="34" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="onSave:" destination="BvW-FF-cZo" eventType="touchUpInside" id="vO5-5n-rPk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jcO-aT-A3a">
+                                <rect key="frame" x="136" y="485.5" width="48" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="onCancel:" destination="BvW-FF-cZo" eventType="touchUpInside" id="cYp-Bi-E5N"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aMD-zt-roT" firstAttribute="leading" secondItem="pyf-ea-rD9" secondAttribute="leading" constant="8" id="3y2-0P-Han"/>
+                            <constraint firstItem="jcO-aT-A3a" firstAttribute="centerX" secondItem="pyf-ea-rD9" secondAttribute="centerX" id="5Qm-Df-y59"/>
+                            <constraint firstItem="jlx-bA-83s" firstAttribute="top" secondItem="95P-Ur-KyI" secondAttribute="bottom" constant="8" id="9by-OY-VZw"/>
+                            <constraint firstItem="4Mc-zo-hfy" firstAttribute="centerX" secondItem="pyf-ea-rD9" secondAttribute="centerX" id="ALV-PC-EVc"/>
+                            <constraint firstAttribute="trailing" secondItem="VCw-UF-Jrw" secondAttribute="trailing" constant="8" id="BFg-Vk-2Hg"/>
+                            <constraint firstItem="s9d-UY-4kk" firstAttribute="top" secondItem="aMD-zt-roT" secondAttribute="bottom" constant="8" id="Bpk-NR-XUb"/>
+                            <constraint firstItem="s9d-UY-4kk" firstAttribute="leading" secondItem="pyf-ea-rD9" secondAttribute="leading" constant="8" id="Dbf-2W-ebG"/>
+                            <constraint firstItem="jlx-bA-83s" firstAttribute="leading" secondItem="pyf-ea-rD9" secondAttribute="leading" constant="8" id="G4N-Hb-dQF"/>
+                            <constraint firstItem="4Mc-zo-hfy" firstAttribute="top" secondItem="s9d-UY-4kk" secondAttribute="bottom" constant="8" id="MkB-3G-UiG"/>
+                            <constraint firstItem="jcO-aT-A3a" firstAttribute="top" secondItem="4Mc-zo-hfy" secondAttribute="bottom" constant="8" id="PGc-hE-57D"/>
+                            <constraint firstItem="VCw-UF-Jrw" firstAttribute="top" secondItem="95P-Ur-KyI" secondAttribute="bottom" constant="8" id="WbR-o9-gt4"/>
+                            <constraint firstAttribute="trailing" secondItem="s9d-UY-4kk" secondAttribute="trailing" constant="8" id="cH7-7m-t6j"/>
+                            <constraint firstAttribute="trailing" secondItem="aMD-zt-roT" secondAttribute="trailing" constant="8" id="gxc-D2-DSS"/>
+                            <constraint firstItem="aMD-zt-roT" firstAttribute="top" secondItem="jlx-bA-83s" secondAttribute="bottom" constant="8" id="mVe-66-LD4"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" id="MOW-Ez-Jag"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="jcO-aT-A3a" id="0nE-7g-FZk"/>
+                        <outlet property="saveButton" destination="4Mc-zo-hfy" id="dYN-9D-O4A"/>
+                        <outlet property="userImage" destination="s9d-UY-4kk" id="t3R-MQ-2u2"/>
+                        <outlet property="usernameLabel" destination="aMD-zt-roT" id="4TQ-aa-oXl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Yd-oy-r3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

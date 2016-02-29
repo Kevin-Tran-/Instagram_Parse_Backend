@@ -32,7 +32,7 @@ class UserMedia: NSObject {
         media["likesCount"] = 0
         media["commentsCount"] = 0
         media["created_at"] = NSDate()
-        media["username"] = PFUser.currentUser()!
+        media["username_str"] = PFUser.currentUser()?.username
 
         // Save object (following function will save the object in Parse asynchronously)
         media.saveInBackgroundWithBlock(completion)
@@ -83,6 +83,15 @@ class UserMedia: NSObject {
 //            }
 //        }
     }
+    
+    class func uploadProfilePic(image: UIImage?, withCompletion completion: PFBooleanResultBlock) {
+        
+        let user = PFUser.currentUser()!
+        user["profile_image"] = getPFFileFromImage(image)
+        
+        user.saveInBackgroundWithBlock(completion)
+    }
+
     
 
 }
