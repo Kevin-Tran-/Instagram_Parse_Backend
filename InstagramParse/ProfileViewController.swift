@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  ProfileViewController.swift
 //  InstagramParse
 //
 //  Created by Kevin Tran on 2/28/16.
@@ -10,12 +10,15 @@ import UIKit
 import Parse
 import MBProgressHUD
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var HeaderView: UIView!
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    var instagram: [PFObject]?
     
-    var refreshControl: UIRefreshControl!       //add refresh on drag
+    var instagram: [PFObject]?
+    var user: PFUser?
 
     
     override func viewDidLoad() {
@@ -25,36 +28,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 260
-        
 
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.insertSubview(refreshControl, atIndex: 0)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        networkRequest()
-    }
-    
-    func networkRequest() {
-        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        
-        if PFUser.currentUser() != nil {
-            print(PFUser.currentUser()!.objectId!)
-            UserMedia.queryParse(20) { (instagram, error) -> () in
-                print(instagram)
-                self.instagram = instagram
-                self.tableView.reloadData()
-                MBProgressHUD.hideHUDForView(self.view, animated: true)
-            }
-        }
-    }
-    
-    func onRefresh() {
-        self.networkRequest()
-        print("Refreshing Instagram")
-        self.refreshControl.endRefreshing()
-        print("Refreshing Complete")
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,7 +115,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             createdView.text = time
         }
         headerView.addSubview(createdView)
-
+        
         
         return headerView
     }
@@ -159,7 +134,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let secs = 60
         let mins = 60
         let hours = 24
-
+        
         var sec = Int(today.timeIntervalSinceDate(createdAt!))
         if sec > 518400 { //greater than 6 days
             let formatter = NSDateFormatter()
