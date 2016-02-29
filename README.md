@@ -2,7 +2,7 @@
 
 **InstagramGroundUp** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
@@ -20,7 +20,7 @@ The following **optional** features are implemented:
 - [x] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse.
 - [ ] User Profiles:
    - [x] Allow the logged in user to add a profile photo
-   - [x] Display the profile photo with each post
+   - [x] Display the profile photo with each posts     **Doesn't work correctly if there are multiple user**
    - [ ] Tapping on a post's username or profile photo goes to that user's profile page
 
 The following **additional** features are implemented:
@@ -30,14 +30,14 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Better way of implementing headerview
+2. More about Mongo 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/Vh0Qglu.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -47,7 +47,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Kevin Tran]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
