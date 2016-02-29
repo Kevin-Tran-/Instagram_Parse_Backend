@@ -23,14 +23,13 @@ class InstagramViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func onLogout(sender: UIBarButtonItem) {
+
+    @IBAction func onLogout(sender: UIButton) {
         PFUser.logOut()
         let vc = storyboard!.instantiateInitialViewController()! as UIViewController
         self.presentViewController(vc, animated: true, completion: nil)
         print("User logged out")
     }
-
     /*
     // MARK: - Navigation
 
