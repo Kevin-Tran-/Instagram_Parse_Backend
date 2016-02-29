@@ -20,7 +20,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 260
         
+
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         if PFUser.currentUser() != nil {
             print(PFUser.currentUser()!.objectId!)
             UserMedia.queryParse(20) { (instagram, error) -> () in
@@ -29,11 +36,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.tableView.reloadData()
             }
         }
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {

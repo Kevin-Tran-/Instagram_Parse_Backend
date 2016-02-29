@@ -31,7 +31,9 @@ class UserMedia: NSObject {
         media["caption"] = caption
         media["likesCount"] = 0
         media["commentsCount"] = 0
-        
+        media["created_at"] = NSDate()
+        media["username"] = PFUser.currentUser()!
+
         // Save object (following function will save the object in Parse asynchronously)
         media.saveInBackgroundWithBlock(completion)
     }
@@ -59,6 +61,7 @@ class UserMedia: NSObject {
         //let predicate = NSPredicate(format: "likesCount > 100")
         var query = PFQuery(className: "UserMedia") //, predicate: predicate)
         query.limit = limit!
+        query.orderByDescending("createdAt")
         
         // fetch data asynchronously
         query.findObjectsInBackgroundWithBlock { (media: [PFObject]?, error: NSError?) -> Void in

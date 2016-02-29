@@ -6,6 +6,7 @@
 target 'InstagramParse' do
 
 pod ‘Parse’
+pod ‘MBProgressHUD’
 
 end
 

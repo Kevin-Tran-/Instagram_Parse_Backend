@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MBProgressHUD
+
 
 class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -19,6 +21,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         captionField.hidden = true
         submitButton.hidden = true
+        self.previewImage.hidden = true
         captionField.text = ""
 
         // Do any additional setup after loading the view.
@@ -69,6 +72,8 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
             previewImage.image = resizeImage
             captionField.hidden = false
             submitButton.hidden = false
+            previewImage.hidden = false
+
             self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -85,12 +90,28 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
 
     @IBAction func onSubmit(sender: UIButton) {
+        
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
         UserMedia.postUserImage(previewImage.image!, withCaption: captionField.text!) { (success: Bool, error: NSError?) -> Void in
             if success == true {
                 print("Successfully posted")
+                self.captionField.hidden = true
+                self.submitButton.hidden = true
+                self.captionField.text = ""
+                self.previewImage.hidden = true
             } else {
-                print("failed with errorL \(error)")
+                print("failed with error: \(error)")
+                let alertController = UIAlertController(title: "Error", message: "Failed to upload picture", preferredStyle: .Alert)
+                let OKAction = UIAlertAction(title: "OK", style: .Default) { (action) in
+                }
+                alertController.addAction(OKAction)
+                
+                self.presentViewController(alertController, animated: true) {
+                    // optional code for what happens after the alert controller has finished presenting
+                }
             }
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
         }
     }
     /*

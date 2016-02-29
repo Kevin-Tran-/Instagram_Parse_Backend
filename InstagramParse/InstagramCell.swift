@@ -16,6 +16,15 @@ class InstagramCell: UITableViewCell {
     
     var instagram: PFObject! {
         didSet{
+            if let userPicture = instagram["media"]! as? PFFile {
+                userPicture.getDataInBackgroundWithBlock({
+                    (imageData: NSData?, error: NSError?) -> Void in
+                    if (error == nil) {
+                        let image = UIImage(data:imageData!)
+                        self.postImage.image = image!
+                    }
+                })
+            }
             self.captionLabel.text = instagram["caption"] as? String
         }
     }
